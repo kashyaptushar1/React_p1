@@ -1,20 +1,43 @@
+import { useContext, useEffect, useState } from "react"
+// import { ProductContext } from "../utils/Context"
+import axios from "../utils/Axios";
+import { useParams } from "react-router-dom";
+import Loading from "./Loading";
+
 
 
 function Details() {
-  return (
-    <div className="w-[70%] h-full m-auto p-[10%] flex items-center justify-center " >
+  const [product , setproduct] = useState(null);
+
+  const {id}  = useParams();
+  
+  const getsingleproducts = async () =>{
+    try {
+      const {data} = await axios.get(`/products/${id}`);
+      setproduct(data);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    getsingleproducts();
+  },[])
+
+  return (product?
+    <div className="w-[70%] h-full m-auto p-[10%] flex items-center justify-center gap-5" >
         <img
         className="object-contain h-[80%] w-[40%] "
-         src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" alt="" />
+         src={`${product.image}`} alt="" />
 
-         <div className="content w-[50%] " >
-            <h1 className="text-4xl" >Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops</h1>
-            <h3 className="text-zinc-400 my-5" >men's clothing</h3>
-            <h2 className="text-red-300 mb-3" >$ 109.01</h2>
-            <p>Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday</p>
+         <div className="content  w-[50%] " >
+            <h1 className="text-4xl" >{product.title}</h1>
+            <h3 className="text-zinc-400 my-5" >{product.category}</h3>
+            <h2 className="text-red-300 mb-3" >$ {product.price}</h2>
+            <p>{product.description}</p>
          </div>
       
-    </div>
+    </div>:<Loading/>
   )
 }
 

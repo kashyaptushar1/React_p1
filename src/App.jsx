@@ -1,5 +1,5 @@
 
-import Nav from "./Component/Nav"
+// import Nav from "./Component/Nav"
 import Home from "./Component/Home"
 import { Route, Routes } from "react-router-dom"
 import Details from "./Component/Details"
