@@ -12,6 +12,7 @@ const {search , pathname} =   useLocation()
       {(pathname != "/" || search.length > 0) && (
         <Link to="/" className="text-red-300 absolute left-[17%] top-[3%] " >Home</Link>
       )}
+      {/* this is for Home button not showing Home screen implement using useLocation */}
 
 
 
