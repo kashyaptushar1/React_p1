@@ -3,7 +3,7 @@ import Nav from './Nav';
 import { useContext, useEffect, useState } from 'react';
 import { ProductContext } from '../utils/Context';
 import Loading from './Loading';
-import axios from '../utils/Axios';
+// import axios from '../utils/Axios';
 
 function Home() {
   const [products] = useContext(ProductContext); // Extracting products from context
@@ -14,19 +14,23 @@ function Home() {
   
   const [filteredProducts, setfilteredProducts] = useState(null);
 
-
-  const getproductscategory = async ()=>{
-      try {
-        const {data} = await axios.get(`/products/category/${category}`);
-        setfilteredProducts(data)
-      } catch (error) {
-        console.log(error)
-      }
-  }
+// comment because now data in not come from API kyuki data ab local storage mai safe hai
+  // const getproductscategory = async ()=>{
+  //     try {
+  //       const {data} = await axios.get(`/products/category/${category}`);
+  //       setfilteredProducts(data)
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  // }
 
   useEffect(()=>{
     if(!filteredProducts || category == "undefined") setfilteredProducts(products);
-    if(category != "undefined") getproductscategory()
+    if(category != "undefined") {
+
+      // getproductscategory();
+      setfilteredProducts(products.filter(p=> p.category === category))
+    }
   },[category , products]);
 
   // console.log(filteredProducts)
